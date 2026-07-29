@@ -327,8 +327,18 @@ async function loadDetails() {
   document.querySelector(".scan-text").textContent =
     data.message_2 || "";
 
-  document.querySelector(".baby-name").textContent =
-    data.baby_name || "";
+  const babyName = data.baby_name || "";
+const babyNameElement = document.querySelector(".baby-name");
+
+if (babyName.length > 16) {
+  const words = babyName.trim().split(/\s+/);
+  const lastWord = words.pop();
+
+  babyNameElement.innerHTML =
+    words.join(" ") + "<br>" + lastWord;
+} else {
+  babyNameElement.textContent = babyName;
+}
 
   document.querySelector(".baby-date").textContent =
     data.due_date || "";
