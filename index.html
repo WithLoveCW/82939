@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A SPecial Surprise Awaits!</title>
+	
+	<meta name="description" content="Open to discover your special surprise.">
+
+<meta property="og:title" content="A Special Surprise Awaits">
+<meta property="og:description" content="Open to discover your special surprise.">
+<meta property="og:image" content="https://withlovecw.github.io/reponumber/images/preview.jpeg">
+<meta property="og:type" content="website">
+
+<style>
+@font-face {
+  font-family: 'JulesColossal';
+  src: url('./images/JulesColossal-Book.ttf') format('truetype');
+}
+	@font-face {
+  font-family: 'Abellaice';
+  src: url('./images/Abellaice.ttf') format('truetype');
+}
+	@font-face {
+  font-family: 'HearthStone';
+  src: url('./images/HearthStone.ttf') format('truetype');
+		
+}
+	@font-face {
+  font-family: 'Shelline';
+  src: url('./images/Shelline.ttf') format('truetype');
+}
+	@font-face {
+  font-family: 'AzoSansLight';
+  src: url('./images/AzoSans-Light.ttf') format('truetype');
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #d8c0ad;
+  font-family: Georgia, serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+
+  height: 100vh;
+  max-width: calc(100vh * (1080 / 1920));
+  aspect-ratio: 1080 / 1920;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #f5ded6;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  overflow: hidden;
+}
+
+.screen.active {
+  display: block;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PAGE 1 SCRATCH */
+#scratchCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  display: block;
+  touch-action: none;
+}
+
+/* PAGE 3 PHOTO */
+.photo-wrap {
+  position: absolute;
+
+  /* MOVE PHOTO BOX */
+  left: 50%;
+  top: 25%;
+
+  /* CHANGE SIZE */
+  width: 84%;
+  height: 35%;
+
+  transform: translateX(-50%);
+  z-index: 5;
+  overflow: hidden;
+
+  background: #ffffff;
+  padding: 12px;
+  border: 2px solid #d4af37;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+#friendPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+	#page1 .bg {
+  z-index: 1;
+}
+
+#scratchCanvas {
+  z-index: 2;
+}
+	.baby-name {
+  position: absolute;
+  top: 65%;
+  width: 100%;
+  text-align: center;
+
+  font-family: 'shelline';
+  font-size: 52px;
+  color: #4b342b;
+
+  z-index: 6;
+}
+	.baby-date {
+  position: absolute;
+  top: 75%;
+  width: 100%;
+  text-align: center;
+
+ font-family: 'AzoSansLight';
+  font-size: 15px;
+  letter-spacing: 5px;
+  color: #272423;
+  text-transform: uppercase;
+
+  z-index: 6;
+}
+	.page1-text {
+  position: absolute;
+ bottom: 75%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 72%;
+  text-align: center;
+
+  font-family: 'JulesColossal';
+  font-size: 30px;
+  line-height: 1.5;
+  color: #4b342b;
+
+  z-index: 6;
+}
+.scan-text {
+  position: absolute;
+  bottom: 79%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 68%;
+  max-width: 68%;
+
+  text-align: center;
+
+  font-family: 'JulesColossal';
+  font-size: 24px;
+  line-height: 1.4;
+  color: #4b342b;
+
+  z-index: 10;
+}
+	/* PAGE 3 FADE */
+.fade-in {
+  animation: fadeIn 1.2s ease forwards;
+}
+
+.text-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: textReveal 1s ease forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.25s;
+}
+
+.delay-2 {
+  animation-delay: 0.45s;
+}
+
+.delay-3 {
+  animation-delay: 0.65s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+	.reveal-bg {
+  opacity: 0;
+}
+
+.scratch-ready .reveal-bg {
+  opacity: 1;
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- PAGE 1: scratch card, revealing Page2 image underneath -->
+<section class="screen active" id="page1">
+<img class="bg reveal-bg" src="./images/Page2.jpeg" alt="">
+
+  <div class="page1-text">
+    A little surprise, we couldn't wait to share with you…
+  </div>
+
+  <canvas id="scratchCanvas"></canvas>
+</section>
+
+  <!-- PAGE 3: photo page -->
+  <section class="screen" id="page3">
+    <img class="bg" src="./images/page3.jpeg" alt="">
+
+ <div class="scan-text">
+  Two tiny heartbeats,
+already so loved by your
+friends and family!
+</div>
+
+<div class="photo-wrap">
+  <img id="friendPhoto" src="./images/image-placeholder.jpeg" alt="">
+</div>
+
+<div class="baby-name text-reveal delay-2">
+  The Smithson Twins
+</div>
+
+<div class="baby-date text-reveal delay-3">
+  SEPTEMBER 20XX
+</div>
+  </section>
+
+</div>
+
+<audio id="winSound" preload="auto">
+  <source src="./sounds/win.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<script>
+const SUPABASE_URL = "https://bfzhvulpymbqzwxorzih.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_aLj5jota1g3icfvF7MROIQ_b4-yKlo3";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let scratchedEnough = false;
+let scratchSetupDone = false;
+
+function goToPage(pageNumber) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  document.getElementById(`page${pageNumber}`).classList.add("active");
+	if (pageNumber === 3) {
+  document.getElementById("page3").classList.add("fade-in");
+}
+}
+
+async function loadDetails() {
+  const params = new URLSearchParams(window.location.search);
+  const revealId = params.get("id");
+
+  if (!revealId) return;
+
+  const { data, error } = await supabaseClient
+    .from("gender-design1")
+    .select("*")
+    .eq("id", revealId)
+    .single();
+
+  if (error || !data) {
+    console.error("Details load error:", error);
+    return;
+  }
+
+  document.getElementById("friendPhoto").src =
+   data.ultrasound_url || "./images/image-placeholder.jpeg";
+}
+
+function setupScratch() {
+  if (scratchSetupDone) return;
+  scratchSetupDone = true;
+
+  const canvas = document.getElementById("scratchCanvas");
+  const ctx = canvas.getContext("2d");
+  const app = document.querySelector(".app");
+  const rect = app.getBoundingClientRect();
+
+  canvas.width = rect.width * window.devicePixelRatio;
+  canvas.height = rect.height * window.devicePixelRatio;
+  canvas.style.width = rect.width + "px";
+  canvas.style.height = rect.height + "px";
+
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+  const scratchImage = new Image();
+  scratchImage.src = "./images/Page1.jpeg";
+	canvas.style.opacity = "0";
+
+  scratchImage.onload = () => {
+  ctx.drawImage(scratchImage, 0, 0, rect.width, rect.height);
+  ctx.globalCompositeOperation = "destination-out";
+  canvas.style.background = "transparent";
+
+  canvas.style.opacity = "1";
+  document.getElementById("page1").classList.add("scratch-ready");
+};
+
+  let isDrawing = false;
+
+  const heartArea = {
+    left: rect.width * 0.13,
+    top: rect.height * 0.285,
+    width: rect.width * 0.74,
+    height: rect.height * 0.385
+  };
+
+  const scratchedCells = new Set();
+  const cellSize = 18;
+
+  const totalCells =
+    Math.floor(heartArea.width / cellSize) *
+    Math.floor(heartArea.height / cellSize);
+
+  function scratch(e) {
+    if (!isDrawing || scratchedEnough) return;
+
+    const touch = e.touches ? e.touches[0] : e;
+    const canvasRect = canvas.getBoundingClientRect();
+
+    const x = touch.clientX - canvasRect.left;
+    const y = touch.clientY - canvasRect.top;
+
+    ctx.beginPath();
+    ctx.arc(x, y, 16, 0, Math.PI * 2);
+    ctx.fill();
+
+    checkScratchAmount(x, y);
+  }
+
+  function checkScratchAmount(x, y) {
+    const insideHeart =
+      x >= heartArea.left &&
+      x <= heartArea.left + heartArea.width &&
+      y >= heartArea.top &&
+      y <= heartArea.top + heartArea.height;
+
+    if (!insideHeart) return;
+
+    const cellX = Math.floor((x - heartArea.left) / cellSize);
+    const cellY = Math.floor((y - heartArea.top) / cellSize);
+
+    scratchedCells.add(`${cellX}-${cellY}`);
+
+    const percent = scratchedCells.size / totalCells;
+
+    if (percent > 0.41) {
+      scratchedEnough = true;
+      canvas.style.pointerEvents = "none";
+      bigConfetti();
+
+      setTimeout(() => {
+        goToPage(3);
+      }, 3000);
+    }
+  }
+
+  canvas.addEventListener("mousedown", () => isDrawing = true);
+  canvas.addEventListener("mouseup", () => isDrawing = false);
+  canvas.addEventListener("mouseleave", () => isDrawing = false);
+  canvas.addEventListener("mousemove", scratch);
+
+  canvas.addEventListener("touchstart", e => {
+    isDrawing = true;
+    scratch(e);
+  });
+
+  canvas.addEventListener("touchmove", e => {
+    e.preventDefault();
+    scratch(e);
+  }, { passive: false });
+
+  canvas.addEventListener("touchend", () => isDrawing = false);
+}
+
+function bigConfetti() {
+  const sound = document.getElementById("winSound");
+
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
+
+  confetti({
+    particleCount: 220,
+    spread: 110,
+    origin: { y: 0.65 },
+   colors: [
+  "#FFFFFF", // White
+  "#D4AF37", // Gold
+  "#CD7F32", // Bronze
+  "#C0C0C0"  // Silver
+]
+  });
+
+  setTimeout(() => {
+    confetti({
+      particleCount: 180,
+      spread: 120,
+      origin: { x: 0.2, y: 0.65 },
+     colors: [
+  "#FFFFFF", // White
+  "#D4AF37", // Gold
+  "#CD7F32", // Bronze
+  "#C0C0C0"  // Silver
+]
+    });
+
+    confetti({
+      particleCount: 180,
+      spread: 120,
+      origin: { x: 0.8, y: 0.65 },
+     colors: [
+  "#FFFFFF", // White
+  "#D4AF37", // Gold
+  "#CD7F32", // Bronze
+  "#C0C0C0"  // Silver
+]
+    });
+  }, 300);
+}
+
+window.addEventListener("load", () => {
+  loadDetails();
+  setupScratch();
+});
+</script>
+</body>
+</html>
