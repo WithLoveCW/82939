@@ -318,8 +318,22 @@ async function loadDetails() {
     return;
   }
 
-  document.getElementById("friendPhoto").src =
-   data.ultrasound_url || "./images/image-placeholder.jpeg";
+  document.querySelector(".page1-text").textContent =
+    data.message || "";
+
+  document.querySelector(".scan-text").textContent =
+    data.message_2 || "";
+
+  document.querySelector(".baby-name").textContent =
+    data.baby_name || "";
+
+  document.querySelector(".baby-date").textContent =
+    data.due_date || "";
+
+  if (data.ultrasound_url) {
+    document.getElementById("friendPhoto").src =
+      data.ultrasound_url;
+  }
 }
 
 function setupScratch() {
