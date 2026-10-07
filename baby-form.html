@@ -220,6 +220,11 @@
           Optional: Upload your ultrasound or special picture
         </div>
 
+		  <div id="imageSizeError" style="display: none; margin-top: 8px; text-align: left; font-size: 13px; line-height: 1.4; color: #b42318;">
+  <strong>Your image is too large to upload. Please choose an image under 5 MB.</strong><br>
+  <strong>TIP:</strong> Try taking a screenshot of your image and uploading the screenshot instead — this will usually reduce the file size.
+</div>
+
 		<label for="message">Message 1</label>
 <textarea
   id="message"
@@ -310,6 +315,20 @@
     const pageTitle = document.getElementById("pageTitle");
     const introText = document.getElementById("introText");
     const submitButton = document.getElementById("submitButton");
+	  const imageInput = document.getElementById("ultrasoundImage");
+const imageSizeError = document.getElementById("imageSizeError");
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5 MB
+
+imageInput.addEventListener("change", function() {
+  const file = imageInput.files[0];
+
+  if (file && file.size > MAX_IMAGE_SIZE) {
+    imageSizeError.style.display = "block";
+    imageInput.value = "";
+  } else {
+    imageSizeError.style.display = "none";
+  }
+});
 
     const params = new URLSearchParams(window.location.search);
     const editToken = params.get("edit");
@@ -397,10 +416,17 @@
 		const message2 =
   document.getElementById("message2").value.trim();
 
-      const ultrasoundFile =
-        document.getElementById("ultrasoundImage").files[0];
+     const ultrasoundFile =
+  document.getElementById("ultrasoundImage").files[0];
 
-      let ultrasoundUrl = null;
+if (ultrasoundFile && ultrasoundFile.size > MAX_IMAGE_SIZE) {
+  imageSizeError.style.display = "block";
+  return;
+}
+
+let ultrasoundUrl = null;
+
+		
 
       if (ultrasoundFile) {
         const fileExt =
